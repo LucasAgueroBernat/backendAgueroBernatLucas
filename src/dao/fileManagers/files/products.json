@@ -1,0 +1,35 @@
+[
+	{   
+        "title": "Funco LORD VADER",
+        "description": "Star Wars Darth Vader, Marca: Funko-Pop!, Modelo: 543, Producto Original, Nuevo - Cerrado ",
+        "price": 23000,
+        "thumbnail": "ttp2.mlstatic.com/D_NQ_NP_2X_647896-MLA69967639465_062023-F.webp",
+        "code": "abc123",
+        "stock": 25,
+		"status": "true",
+		"category": "collection",
+		"id": 1
+	},
+	{
+		"title": "Funco AHSOKA TANO",
+		"description": "Funco AHSOKA TANO Star Wars , Marca: Funko-Pop!, Modelo: 873, Producto Original, Nuevo - Cerrado",
+		"price": 22000,
+		"thumbnail": "http2.mlstatic.com/D_NQ_NP_912640-MLA50844906885_072022-O.webp",
+		"code": "xyz999",
+		"stock": 30,
+		"status": true,
+		"category": "collection",
+		"id": 2
+	},
+	{
+		"title": "Funco Mandaloriano y Grogu",
+		"description": "Funko Pop! - The Mandalorian With The Child 402 - Star Wars",
+		"price": 32881,
+		"thumbnail": "https://http2.mlstatic.com/D_NQ_NP_960485-MLM46708548309_072021-O.webp",
+		"code": "asdsda",
+		"stock": 30,
+		"status": true,
+		"category": "collection",
+		"id": 3
+	}
+]

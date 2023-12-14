@@ -1,0 +1,29 @@
+<h1>PRODUCTOS</h1>
+<div>
+    <h1>BIENVENIDO</h1>
+    <p>usuario: {{user.name}}</p>
+    <p>email: {{user.email}}</p>
+    <p>age: {{user.age}}</p>
+    <p>rol: {{user.rol}}</p>
+    
+</div>
+<div>
+    {{#each products}}
+    <div>
+        <img src="{{this.thumbnail}}" alt="{{this.title}}">
+        <h2>{{this.title}}</h2>
+        <p>${{this.price}}</p>
+        <a href="/products/{{this._id}}" class="view-details-btn">Ver Detalles</a>
+    </div>
+    {{/each}}
+</div>
+<div>
+    {{!-- Paginación --}}
+    {{#if hasPrevPage}}
+    <a href="?page={{prevPage}}&limit={{limit}}">Página Anterior</a>
+    {{/if}}
+    Página {{page}} de {{totalPages}}
+    {{#if hasNextPage}}
+    <a href="?page={{nextPage}}&limit={{limit}}">Página Siguiente</a>
+    {{/if}}
+</div>
