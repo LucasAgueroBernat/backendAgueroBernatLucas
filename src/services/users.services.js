@@ -1,50 +1,34 @@
-import Users from '../dao/mongo/users.mongo.js';
-import { createHash, generateToken, isValidPassword } from '../utils.js';
+import UsersRepository from "../repositories/users.repository.js";
+import { Users } from '../dao/factory.js';
+import { InvalidCredentials, UserAlreadyExists } from "../utils/custom.exceptions.js";
+import { loginInvalidCredentials } from "../utils/custom.html.js";
+import { sendEmail } from "./mail.service.js";
+import { createHash, generateToken, isValidPassword } from "../utils/utils.js";
 
-const usersManager = new Users();
+const usersDao = new Users();
+const usersRepository = new UsersRepository(usersDao);
 
-const register = async (user) => {
-    const { first_name, last_name, role, email, password } = user;
+const login = async (password, email) => {
+    // const user = await this.usersManager.getByEmail(email);
+    const user = await usersRepository.getByEmail(email);
 
-    if (!first_name || !last_name || !role || !email || !password) {
-        return res.sendClientError('incomplete values')
+    if (!user) {
+        throw new InvalidCredentials('incorrect credentials');
     }
 
-    const existsUser = await usersManager.getByEmail(email);
-
-    if (existsUser) {
-        return res.sendClientError('user already exists');
-    }
-
-    const hashedPassword = createHash(password);
-
-    const newUser = {
-        ...user
-    }
-
-    newUser.password = hashedPassword;
-
-    const result = await usersManager.save(newUser);
-    return result;
-}
-
-const login = async (user) => {
-    const { email, password } = user;
-
-    if (!email || !password) {
-        return res.sendClientError('incomplete values')
-    }
-
-    const logUser = await usersManager.getByEmail(email);
-
-    if (!logUser) {
-        return res.sendClientError('incorrrect credentials')
-    }
-
-    const comparePassword = isValidPassword(password, logUser.password);
+    const comparePassword = isValidPassword(password, user.password);
 
     if (!comparePassword) {
-        return res.sendClientError('incorrrect credentials')
+        //Enviar un correo electrónico
+        const emailInvalidCredentials = {
+            to: user.email,
+            subject: 'Login fallido',
+            html: loginInvalidCredentials
+        };
+
+        await sendEmail(emailInvalidCredentials);
+
+        throw new InvalidCredentials('incorrect credentials');
     }
 
     const accessToken = generateToken(user);
@@ -52,7 +36,29 @@ const login = async (user) => {
     return accessToken;
 }
 
+const register = async (user) => {
+    // const existsUser = await this.usersManager.getByEmail(email);
+    const userByEmail = await usersRepository.getByEmail(user.email);
+
+    if (userByEmail) {
+        // vamos a lanzar una excepcion
+        throw new UserAlreadyExists('user already exists')
+    }
+
+    const hashedPassword = createHash(user.password);
+
+    const newUser = {
+        ...user
+    }
+
+    newUser.password = hashedPassword;
+
+    const result = await usersRepository.save(newUser);
+
+    return result;
+}
+
 export {
-    register,
-    login
+    login,
+    register
 }

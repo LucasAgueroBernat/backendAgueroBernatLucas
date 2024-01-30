@@ -1,11 +1,10 @@
-class UsersDto {
+export default class UserDto {
     constructor(user) {
-        this.role = `${user.role}`;
-        this.name = `${user.name} ${user.lastname}`;
-        this.age = `${user.age}`;
-        this.email = `${user.email}`;
-        this.cart = `${user.cart}`;  
+        this.firstName = user.first_name;
+        this.lastName = user.last_name;
+        this.email = user.email;
+        this.role = user.role || 'user';
+        this.cart = user.cart;
+        this.age = user.age;
     }
 }
-
-export default UsersDto;

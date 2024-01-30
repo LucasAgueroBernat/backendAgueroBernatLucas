@@ -1,47 +1,57 @@
+import { ProductsModel } from '../dbManagers/models/products.models.js';
+
 export default class Products {
     constructor() {
-        this.data = [];
+        console.log('Products database operations are ready.');
+    }
+
+    //Devuelve paginate filtrado por opciones
+    filterProducts = async (filter, options) => {
+        const result = await ProductsModel.paginate(filter, options);
+        return result;
     }
 
     //Obtiene todos los productos
     getProducts = async () => {
-        return this.data;
-    };
+        const products = await ProductsModel.find();
+        return products;
+    }
+
+    //Verifica si un producto existe
+    existProduct = async (prodId) => {
+        const product = await ProductsModel.findById(prodId);
+        return !!product;
+    }
+
+    //Verifica si un producto está en stock 
+    //PRE: El producto existe
+    isInStock = async (prodId) => {
+        const product = await ProductsModel.findById(prod);
+        if (product.stock === 0) return false;
+        return true;
+    }
 
     //Agrega un producto
     addProduct = async (product) => {
-        const productAlreadyExists = this.products.some(
-            (existingProduct) => existingProduct.code === product.code
-        );
-        if (productAlreadyExists) {
-            throw new Error("Product with this code already exists");
-        }
-
-        this.products.push(product);
-        return product;
+        const result = await ProductsModel.create(product);
+        return result;
     }
 
     //Obtiene un producto por su id
     getProductById = async (id) => {
-        return this.data[{ _id: id }];
-    };
+        const result = await ProductsModel.findById(id);
+        return result;
+    }
 
     //Actualiza un producto
-    updateProduct = async (pid, updatedFields) => {
-        const index = this.products.findIndex((product) => product._id === pid);
-        if (index !== -1) {
-            this.products[index] = { ...this.products[index], ...updatedFields };
-            return this.products[index];
-        }
-    };
+    updateProduct = async (id, product) => {
+        const result = await ProductsModel.updateOne({ _id: id }, product, { new: true });
+        return result;
+    }
 
     //Elimina un producto
-    deleteProduct = async (pid) => {
-        const index = this.products.findIndex((product) => product._id === pid);
-        if (index !== -1) {
-            this.products.splice(index, 1);
-            return { message: "Producto eliminado correctamente" };
-        }
-    };
-    
+    deleteProduct = async (id) => {
+        const result = await ProductsModel.deleteOne({ _id: id });
+        return result;
+    }
 }
