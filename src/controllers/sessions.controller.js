@@ -56,9 +56,12 @@ transporter.sendMail(mailOptions, (error, info) => {
         res.status(200).json({ message: "Se envió enlace para restablecer la contraseña a su correo electrónico." })
     }
 })
-    else (error) => {
+
+    } catch (error) {
     res.status(500).send("Error al enviar correo y restablecer contraseña.")
-};
+}
+}
+
 const Github = async (req, res) => {
     res.send({ status: 'success', message: 'user registered' });
 }

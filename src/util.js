@@ -7,8 +7,8 @@ const PRIVATE_KEY_JWT = 'blablabla'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const productPath = join(__dirname, "./files/productos.json");
-const cartPath = join(__dirname, "./files/carritos.json");
+const productPath = join(__dirname, "./files/products.json");
+const cartPath = join(__dirname, "./files/carts.json");
 
 const createHash = password =>
     bcrypt.hashSync(password, bcrypt.genSaltSync(10));
