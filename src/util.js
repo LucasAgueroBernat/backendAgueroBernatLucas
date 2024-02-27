@@ -1,14 +1,22 @@
 import { fileURLToPath } from 'url';
-import { dirname, join } from "path";
+import { dirname, path } from 'path';
+import multer from 'multer';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import winston from 'winston';
+import { PRIVATE_KEY_JWT } from './config/constants.js';
+const ENVIRONMENT = 'production';
+let logger;
 
-const PRIVATE_KEY_JWT = 'blablabla'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const productPath = join(__dirname, "./files/products.json");
-const cartPath = join(__dirname, "./files/carts.json");
+const authorization = (role) => {
+    return async (req, res, next) => {
+        if (req.user.role !== role) return res.status(403).send({ status: 'error', message: 'not permissions' })
+        next();
+    }
+}
 
 const createHash = password =>
     bcrypt.hashSync(password, bcrypt.genSaltSync(10));
@@ -21,34 +29,91 @@ const generateToken = (user) => {
     return token;
 }
 
-const authToken = (req, res, next) => {
-    //1. validamos que el token llegue en los headers del request
-    const authToken = req.headers.authorization;
-
-    if (!authToken)
-        return res
-            .status(401)
-            .send({ status: "error", message: "not authenticated" });
-
-    const token = authToken.split(" ")[1];
-    //2. Validar el jwt
-    jwt.verify(token, PRIVATE_KEY, (error, credentials) => {
-        if (error)
-            return res
-                .status(401)
-                .send({ status: "error", message: "not authenticated" });
-        req.user = credentials.user;
-        next();
-    });
+const generateProduct = () => {
+    return {
+        title: faker.commerce.productName(),
+        price: faker.commerce.price(),
+        department: faker.commerce.department(),
+        stock: faker.number.int(1),
+        id: faker.database.mongodbObjectId(),
+        image: faker.image.url(),
+        code: faker.string.alphanumeric(10),
+        description: faker.commerce.productDescription(),
+    };
 };
 
 
+const customLevelOptions = {
+   levels: {
+      debug: 5, 
+      http: 4, 
+      info: 3, 
+      warning: 2, 
+      error: 1, 
+      fatal: 0
+   }}
+
+if(ENVIRONMENT === 'production') {
+      logger = winston.createLogger({
+         levels: customLevelOptions.levels,
+         transports: [
+            new winston.transports.Console({
+               level: 'info'
+            }),
+            new winston.transports.File({
+               filename: 'logs/errors.log',
+               level: 'error'
+            })
+         ]
+   });
+} else {
+      logger = winston.createLogger({
+         levels: customLevelOptions.levels,
+         transports: [
+            new winston.transports.Console({
+               level: 'debug'
+            })
+         ]
+   });
+}
+
+
+const addLogger = (req, res, next) => {
+   req.logger = logger;
+   next();
+}
+
+const storage = multer.diskStorage({
+   destination: function (req, file, cb) {
+
+      if (file.fieldname === "imagenPerfil") {
+         cb(null, path.join(__dirname, "public", "profiles"))
+      }
+
+      if (file.fieldname === "imagenProducto") {
+         cb(null, path.join(__dirname, "public", "products"))
+      }
+
+      if (file.fieldname === "documents") {
+         cb(null, path.join(__dirname, "public", "documents"))
+      }
+
+   },
+
+   filename: function (req, file, cb) {
+      cb(null, file.originalname)
+   }
+})
+
+const uploader = multer({ storage: storage })
+
 export {
-    __dirname,
-    createHash,
-    isValidPassword,
-    generateToken,
-    authToken,
-    productPath,
-    cartPath
+   authorization,
+   __dirname,
+   createHash,
+   isValidPassword,
+   generateToken,
+   generateProduct,
+   addLogger,
+   uploader
 }
