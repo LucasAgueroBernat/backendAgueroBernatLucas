@@ -1,4 +1,4 @@
-import { CartsModel } from '../mongo/models/carts.models.js';
+import { CartsModel } from './models/carts.models.js';
 
 export default class Carts {
     constructor() {
@@ -63,22 +63,21 @@ export default class Carts {
             { $pull: { products: { product: pid } } }
         );
         return result;
-    }
+    }    
 
     // Elimina todos los productos del carrito
-    deleteAllProducts = async (cartId) => {    
-        const cart = await CartsModel.findById(cartId);
-        if (!cart) {
-            throw new Error('Cart not found');
-        }
-        cart.products = [];
-        const result = await cart.save();
-        return result;
-    }
+    deleteAllProducts = async (cartId) => {
+        try {
+            const cart = await CartsModel.findById(cartId);
+            if (!cart) {
+                throw new Error('Cart not found');
+            }
 
-    //Verifica si un carrito existe
-    existCart = async (cartId) => {
-        const cart = await CartsModel.findById(cartId);
-        return !!cart;
+            cart.products = [];
+            const result = await cart.save();
+            return result;
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 }

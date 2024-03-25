@@ -1,10 +1,10 @@
-<h1>{{product.title}}</h1>
-<img src="{{product.thumbnail}}" alt="{{product.title}}">
-<p>{{product.description}}</p>
-<p>Precio: ${{product.price}}</p>
-<p>Categoría: {{product.category}}</p>
-<p>Stock: {{product.stock}}</p>
-<button id="add-to-cart-btn" data-product-id="{{product._id}}">Agregar al Carrito</button>
+<h1 style="font-family: 'Star Jedi', sans-serif;">{{product.title}}</h1>
+<img src="{{product.thumbnail}}" alt="{{product.title}}" style="max-width: 300px;">
+<p style="font-size: 18px;">{{product.description}}</p>
+<p style="font-size: 18px;">Precio: ${{product.price}}</p>
+<p style="font-size: 18px;">Categoría: {{product.category}}</p>
+<p style="font-size: 18px;">Stock: {{product.stock}}</p>
+<button id="add-to-cart-btn" data-product-id="{{product._id}}" style="background-color: #FFE81F; color: #000; border: none; padding: 10px 20px; font-size: 18px; cursor: pointer; border-radius: 5px; font-family: 'Star Jedi', sans-serif;">Agregar al Carrito</button>
 
 <script>
     let cartId = null;

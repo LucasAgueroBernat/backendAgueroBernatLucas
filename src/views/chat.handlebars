@@ -1,10 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chat</title>
+    <title>Chat - Star Wars Edition</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #feda4a; /* Amarillo Jedi */
+            text-shadow: 2px 2px 4px #000;
+        }
+        #chat-area {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            overflow-y: scroll;
+            height: 300px;
+            border: 2px solid #feda4a; /* Amarillo Jedi */
+            border-radius: 10px;
+        }
+        p {
+            margin: 10px 0;
+        }
+        #message-form {
+            text-align: center;
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-right: 10px;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #feda4a; /* Amarillo Jedi */
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #ffd54f; /* Amarillo Jedi Claro */
+        }
+    </style>
 </head>
 <body>
-    <h1>Chat</h1>
+    <h1>Chat - Star Wars Edition</h1>
 
     <div id="chat-area">
         {{#each messages}}
@@ -20,6 +67,5 @@
 
     <script>
        
-    </script>
 </body>
 </html>

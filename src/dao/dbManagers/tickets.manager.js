@@ -1,7 +1,7 @@
-import ticketsModel from '../mongo/models/tickets.models.js';
+import ticketModel from './models/tickets.models.js';
 
 export default class Ticket {
     save = async (ticket) => {
-        return await ticketsModel.create(ticket);
+        return await ticketModel.create(ticket);
     }
 }

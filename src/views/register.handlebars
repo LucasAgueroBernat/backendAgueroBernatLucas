@@ -1,50 +1,54 @@
-<div>
-    <h1>Registro</h1>
+<div style="font-family: 'Arial', sans-serif; color: #ffe81f; background-color: #000; padding: 20px;">
+    <h1 style="color: #ffe81f;">¡Únete a la Resistencia!</h1>
     <form id="registerForm">
-        <label>Nombre</label>
-        <input name="first_name">
+        <label style="color: #ffe81f;">Nombre</label>
+        <input name="first_name" style="margin-bottom: 10px; padding: 5px; border: 1px solid #ffe81f; background-color: #111; color: #fff;">
         <br />
-        <label>Apellido</label>
-        <input name="last_name">
+        <label style="color: #ffe81f;">Apellido</label>
+        <input name="last_name" style="margin-bottom: 10px; padding: 5px; border: 1px solid #ffe81f; background-color: #111; color: #fff;">
         <br />
-        <label>Email</label>
-        <input name="email">
+        <label style="color: #ffe81f;">Email</label>
+        <input name="email" style="margin-bottom: 10px; padding: 5px; border: 1px solid #ffe81f; background-color: #111; color: #fff;">
         <br />
-        <label>Edad</label>
-        <input name="age">
+        <label style="color: #ffe81f;">Edad</label>
+        <input name="age" style="margin-bottom: 10px; padding: 5px; border: 1px solid #ffe81f; background-color: #111; color: #fff;">
         <br />
-        <label>Contraseña</label>
-        <input name="password" type="password">
+        <label style="color: #ffe81f;">Contraseña</label>
+        <input name="password" type="password" style="margin-bottom: 10px; padding: 5px; border: 1px solid #ffe81f; background-color: #111; color: #fff;">
         <br />
-        <input type="submit">
+        <input type="submit" style="padding: 10px 20px; background-color: #ffe81f; border: none; color: #000; cursor: pointer; font-weight: bold;">
     </form>
-    <p>Ya tienes cuenta? <a href="/login">Ingresa aquí</a></p>
+    <p style="color: #ffe81f;">¿Ya tienes cuenta? <a href="/login" style="color: #fff; text-decoration: underline;">Ingresa aquí</a></p>
 </div>
-<script >
+<script>
     const form = document.getElementById('registerForm');
 
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const data = new FormData(form);
         const obj = {};
 
         data.forEach((value, key) => obj[key] = value);
-        console.log('Antes de la llamada a fetch');
-        fetch('/api/sessions/register', {
-            method: 'POST',
-            body: JSON.stringify(obj),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(result => {
+
+        try {
+            const response = await fetch('/api/sessions/register', {
+                method: 'POST',
+                body: JSON.stringify(obj),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
             console.log('Después de la llamada a fetch');
-            if (result.status === 201) {
+
+            if (response.status === 201) {
                 console.log('Redirigiendo a /login');
                 window.location.replace('/login');
             } else {
-                console.log('Error en el servidor:', result.status);
+                console.log('Error en el servidor:', response.status);
             }
-        }).catch(error => {
+        } catch (error) {
             console.error('Error en la llamada a fetch:', error);
-        });
-    })</script>
+        }
+    });
+</script>

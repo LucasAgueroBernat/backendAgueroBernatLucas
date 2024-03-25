@@ -1,0 +1,19 @@
+<!-- product-list.handlebars -->
+<h1>Galactic Emporium: Lista de Productos</h1>
+{{#each products}}
+<div class="product-card">
+    <ul>
+        <li><strong>Título:</strong> {{this.title}}</li>
+        <li><strong>Descripción:</strong> {{this.description}}</li>
+        <li><strong>Código:</strong> {{this.code}}</li>
+        <li><strong>Precio:</strong> ${{this.price}}</li>
+        <li><strong>Estado:</strong> {{this.status}}</li>
+        <li><strong>Existencias:</strong> {{this.stock}}</li>
+        <li><strong>Categoría:</strong> {{this.category}}</li>
+        <!-- Puedes utilizar una imagen de referencia de Star Wars -->
+        <li><strong>Miniatura:</strong> <img src="{{this.thumbnail}}" alt="Miniatura del producto"></li>
+        <li><strong>Propietario:</strong> {{this.owner}}</li>
+        <li><strong>ID:</strong> {{this._id}}</li>
+    </ul>
+</div>
+{{/each}}

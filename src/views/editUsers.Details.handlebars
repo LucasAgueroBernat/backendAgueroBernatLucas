@@ -1,0 +1,22 @@
+{{#each users}}
+<div class="users">
+    <ul>
+        <li>ÚLTIMA CONEXIÓN: {{this.last_connection}}</li>
+        <li>NOMBRE: {{this.first_name}} {{this.last_name}}</li>
+        <li>EMAIL: {{this.email}}</li>
+        <li>ROL: {{this.role}}</li>
+        <li>CARRITO: {{this.cart}}</li>
+        <li>ID: {{this._id}}</li>
+        <li>
+            <form id="deleteForm_{{this._id}}" class="delete-form">
+                <button type="submit" data-user-id="{{this._id}}" style="background-color: #ffcc00; color: black; border: 1px solid black;">ELIMINAR</button>
+            </form>
+        </li>
+        <li>
+            <form id="changeRoleForm_{{this._id}}" class="change-role-form">
+                <button type="submit" data-user-id="{{this._id}}" style="background-color: #ffcc00; color: black; border: 1px solid black;">CAMBIAR ROL</button>
+            </form>
+        </li>
+    </ul>
+</div>
+{{/each}}

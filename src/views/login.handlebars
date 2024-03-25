@@ -1,36 +1,43 @@
-<div>
-    <h1>Login</h1>
+<div style="background-color: black; color: white; padding: 20px;">
+    <h1 style="font-family: 'Star Jedi', sans-serif;">Inicia Sesión</h1>
     <form id="loginForm">
-        <label>Email</label>
-        <input name="email">
+        <label style="font-family: 'Star Jedi', sans-serif;">Email</label>
+        <input name="email" style="padding: 5px; margin-bottom: 10px; width: 100%; border-radius: 5px; border: none;">
         <br />
-        <label>Contraseña</label>
-        <input name="password" type="password">
+        <label style="font-family: 'Star Jedi', sans-serif;">Contraseña</label>
+        <input name="password" type="password" style="padding: 5px; margin-bottom: 10px; width: 100%; border-radius: 5px; border: none;">
         <br />
-        <input type="submit" value="Iniciar Sesion">
+        <input type="submit" value="Iniciar Sesión" style="background-color: #FFD700; color: black; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">
     </form>
-    <p>No estas registrado? <a href="/register">Registrate aquí</a></p>
-    <a href="/api/sessions/github"><button>Ingresar con github</button></a>
+    <p style="font-family: 'Star Jedi', sans-serif;">¿No estás registrado? <a href="/register" style="color: #FFD700;">Regístrate aquí</a></p>
+    <a href="/api/sessions/github" style="text-decoration: none;"><button style="background-color: #0000FF; color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">Ingresar con Github</button></a>
 </div>
 <script>
     const form = document.getElementById('loginForm');
 
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const data = new FormData(form);
         const obj = {};
 
-        data.forEach((value, key) => obj[key] = value);
-        fetch('/api/sessions/login', {
-            method: 'POST',
-            body: JSON.stringify(obj),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(result => {
-            if (result.status === 200) {
+        data.forEach((value, key) => (obj[key] = value));
+        try {
+            const response = await fetch('/api/sessions/login', {
+                method: 'POST',
+                body: JSON.stringify(obj),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (response.status === 200) {
                 window.location.replace('/products');
+            } else {
+                console.error('Failed to login:', response.statusText);
             }
-        })
-    })
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    });
+
 </script>

@@ -1,14 +1,14 @@
-import { ProductsModel } from '../mongo/models/products.models.js';
+import { ProductsModel } from './models/products.models.js';
 
 export default class Products {
     constructor() {
         console.log('Products database operations are ready.');
     }
 
-    //Devuelve paginate filtrado por opciones
+    // Filtra los productos
     filterProducts = async (filter, options) => {
-        const result = await ProductsModel.paginate(filter, options);
-        return result;
+        const products = await ProductsModel.find(filter).sort(options.sort).skip((options.page - 1) * options.limit).limit(options.limit);
+        return products;
     }
 
     //Obtiene todos los productos
@@ -16,21 +16,7 @@ export default class Products {
         const products = await ProductsModel.find();
         return products;
     }
-
-    //Verifica si un producto existe
-    existProduct = async (prodId) => {
-        const product = await ProductsModel.findById(prodId);
-        return !!product;
-    }
-
-    //Verifica si un producto está en stock 
-    //PRE: El producto existe
-    isInStock = async (prodId) => {
-    const product = await ProductsModel.findById(prodId);
-    if (product.stock === 0) return false;
-    return true;
-}
-
+    
     //Agrega un producto
     addProduct = async (product) => {
         const result = await ProductsModel.create(product);

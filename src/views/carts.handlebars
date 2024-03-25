@@ -1,21 +1,69 @@
 <!-- cart.handlebars -->
-<h2>CART {{cartId}}</h2>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
 
-<div style="display: flex; gap: 10px;">
-    {{#each products}}
-    <div class="product">
-        <p>title : {{this.title}}
-        <p>description : {{this.description}}</p>
-        <p>code : {{this.code}}</p>
-        <p>price : {{this.price}}</p>
-        <p>status : {{this.status}}</p>
-        <p>stock : {{this.stock}}</p>
-        <p>category : {{this.category}}</p>
-        <p>thumbnail : {{this.thumbnail}}</p>
-        </p>
-        <p>Cantidad: {{this.quantity}}</p>
+        h2 {
+            color: #ffc107; /* Amarillo */
+        }
 
-        <p>Product: {{this.product}}</p>
+        .producto {
+            background-color: #222; /* Gris oscuro */
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .producto p {
+            margin: 5px 0;
+        }
+
+        .comprar-button {
+            background-color: #ffc107; /* Amarillo */
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .comprar-button:hover {
+            background-color: #ffeb3b; /* Amarillo claro */
+        }
+    </style>
+</head>
+<body>
+    <h2>Carrito de Compras {{cartId}}</h2>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        {{#each products}}
+        <div class="producto">
+            <p>Título: {{this.title}}</p>
+            <p>Descripción: {{this.description}}</p>
+            <p>Código: {{this.code}}</p>
+            <p>Precio: {{this.price}}</p>
+            <p>Estado: {{this.status}}</p>
+            <p>Existencias: {{this.stock}}</p>
+            <p>Categoría: {{this.category}}</p>
+            <p>Miniatura: {{this.thumbnail}}</p>
+            <p>Cantidad: {{this.quantity}}</p>
+        </div>
+        {{/each}}
     </div>
-    {{/each}}
-</div>
+
+    <form action="https/localhost:8080/api/carts/{{cartId}}/purchase" method="post">
+        <button type="submit" class="comprar-button">COMPRAR</button>
+    </form>
+</body>
+</html>

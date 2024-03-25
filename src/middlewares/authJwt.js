@@ -1,13 +1,24 @@
 import usersServices from '../repositories/user.repository.js';
 import configs from '../config/config.js';
+import jwt from 'jsonwebtoken';
 
-const jwt = require('jsonwebtoken')
 
-const ROLES = ["user", "admin", "premium"]
+const ROLES = ["user", "admin", "premium"];
+
+const handlePolicies = (policies) => (req, res, next) => {
+    if (policies[0] === accessRolesEnum.PUBLIC) return next();
+    const user = req.user;
+    if (!policies.includes(user?.role?.toLowerCase()))
+        return res
+            .status(403)
+            .json({ status: "error", message: "not permissions" });
+
+    next();
+};
 
 const verifyToken = async (req, res, next) => {
     try {
-        const token = req.cookies["jwtCookie"]
+        const token = req.cookies["coderCookieToken"]
         if (!token) return res.status(403).json({ status: "error", error: "Token no provided." })
 
         let decoded = jwt.verify(token, configs.privateKeyJwt);
@@ -72,5 +83,6 @@ export {
     isUserOrPremium,
     isUser,
     isAdmin,
-    ROLES
+    ROLES,
+    handlePolicies
 }

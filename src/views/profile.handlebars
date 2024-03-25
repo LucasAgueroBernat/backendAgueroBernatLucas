@@ -1,8 +1,8 @@
-<div>
-    <h1>BIENVENIDO</h1>
-    <p>{{user.name}}</p>
-    <p>{{user.email}}</p>
-    <p>{{user.age}}</p>
-    <p>rol: {{user.rol}}</p>
-    <a href="/api/sessions/logout"><button>Salir</button></a>
+<div style="text-align: center; font-family: 'Arial', sans-serif; color: #fff; background-color: #000; padding: 20px; border-radius: 10px; max-width: 400px; margin: 0 auto;">
+    <h1 style="font-size: 32px; margin-bottom: 20px;">¡BIENVENIDO, JEDI {{user.name}}!</h1>
+    <p style="font-size: 18px;">Email: {{user.email}}</p>
+    <p style="font-size: 18px;">Edad: {{user.age}}</p>
+    <p style="font-size: 18px;">Rol: {{user.rol}}</p>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Star_Wars_Logo.svg" alt="Star Wars Logo" style="max-width: 100%; margin-top: 20px;">
+    <a href="/api/sessions/logout" style="text-decoration: none; margin-top: 20px; display: inline-block; background-color: #ffd700; color: #000; padding: 10px 20px; border-radius: 5px; transition: background-color 0.3s;">Salir de la Galaxia</a>
 </div>

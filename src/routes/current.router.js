@@ -1,10 +1,12 @@
 import Router from "express";
-import { authorization } from "../utils.js";
-import { passportCall } from "../config/passport.config.js";
-import { ShowUserInfo } from "../controllers/current.controller.js"
+import { passportCall } from "../config/passport.js";
+import { handlePolicies } from '../middlewares/authJwt.js';
+import { ShowUserInfo } from "../controllers/current.controller.js";
+import { accessRolesEnum, passportStrategiesEnum } from '../config/enums.js';
 
 const router = Router();
 
-router.get('/', passportCall('jwt'), authorization('USER'), ShowUserInfo);
+//Muestra la info de un usuario
+router.get('/', passportCall(passportStrategiesEnum.JWT), handlePolicies([accessRolesEnum.USER]), ShowUserInfo);
 
 export default router;

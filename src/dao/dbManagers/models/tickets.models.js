@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const ticketsCollection = "tickets";
+const ticketsCollection = 'tickets';
+
 
 const ticketsSchema = new mongoose.Schema({
     code: {
@@ -8,20 +9,19 @@ const ticketsSchema = new mongoose.Schema({
         require: true,
         unique: true
     },
-    amount: {
-        type: Number,
-        require: true
-    },
     purchase_datetime: {
         type: String,
+        require: true,
+        default: Date.now().toLocaleString()
+    },
+    amount: {
+        type: Number,
         require: true
     },
     purchaser: {
         type: String,
         require: true
-    },
-});
+    }
+})
 
-const ticketsModel = mongoose.model(ticketsCollection, ticketsSchema);
-
-export default ticketsModel;
+export const ticketsModel = mongoose.model(ticketsCollection, ticketsSchema);

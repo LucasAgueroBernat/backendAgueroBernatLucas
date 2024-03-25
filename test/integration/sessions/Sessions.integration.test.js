@@ -50,4 +50,4 @@ describe('Testing del módulo de sessions', () => {
             .set('Cookie', [`${cookie.name}=${cookie.value}`]);
         expect(_body.payload.email).to.be.eql('ch@coder.com');
      });
-});
+})

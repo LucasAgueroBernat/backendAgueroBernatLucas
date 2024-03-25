@@ -1,5 +1,5 @@
-import UserDto from "../DTOs/user.dto.js"
-
+// Controlador para mostrar la información del usuario actualmente autenticado.
+import UserDto from "../DTOs/users.dto.js"
 const ShowUserInfo = async (req, res) => {
     try {
         if (req.user) {
@@ -11,7 +11,6 @@ const ShowUserInfo = async (req, res) => {
         req.logger.error(error.message);
     }
 };
-
 
 export {
     ShowUserInfo

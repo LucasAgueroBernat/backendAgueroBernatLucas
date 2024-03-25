@@ -5,7 +5,7 @@ const productsCollection = 'products';
 
 const productsSchema = new mongoose.Schema({
     owner: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
     },
     title: {
@@ -36,6 +36,7 @@ const productsSchema = new mongoose.Schema({
     },
     status: {
         type: Boolean,
+        default: true,
         required: true
     },
     category: {

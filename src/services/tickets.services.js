@@ -1,6 +1,6 @@
 import CartsManager from "../dao/dbManagers/carts.managers.js";
 import CartRepository from "../repositories/cart.repository.js";
-import ProductsManager from '../dao/dbManagers/products.managers.js';
+import ProductsManager from '../dao/dbManagers/products.manager.js';
 import ProductRepository from "../repositories/products.repository.js";
 import {ticketsModel} from '../dao/dbManagers/models/tickets.models.js';
 
